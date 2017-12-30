@@ -5,18 +5,22 @@ import { connect } from 'react-redux'
 import Calculator from '../components/Calculator'
 import * as CalcActions from '../actions'
 
-const App = ({state, actions}) => (
+const App = ({ state, actions }) => (
   <div>
     <Calculator actions={actions} state={state} />
   </div>
 )
 
 App.propTypes = {
-  actions: PropTypes.object.isRequired
+  actions: PropTypes.object.isRequired,
+  state: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
-  input: state.input
+  input: state.input,
+  tmp: state.tmp,
+  sign: state.sign,
+  history: state.history
 })
 
 const mapDispatchToProps = dispatch => ({

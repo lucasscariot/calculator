@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Calculator from './Calculator'
+import Key from './Key'
 
 /* global it */
 
 it('renders without crashing', () => {
   const div = document.createElement('div')
-  ReactDOM.render(<Calculator state={{}} actions={{}} />, div)
+  ReactDOM.render(<Key value='' onClick={() => {}} />, div)
 })
