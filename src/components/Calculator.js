@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { createStore } from 'redux'
 import '../stylesheets/App.css';
 
 class Key extends Component {
@@ -27,15 +26,16 @@ class App extends Component {
   };
 
   handleClick(value) {
-    if (parseFloat(value, 10) || value === '.' || value === '0') {
-        this.setState({input: this.state.input + value });
-    } else {
-      const newState = { input: "", sign: value, tmp: parseFloat(this.state.input, 10) || 0 };
-      if (!this.state.input.length && this.state.tmp && this.state.sign) {
-        newState.tmp = this.state.tmp;
-      }
-      this.setState(newState);
-    }
+    this.props.actions.addOperator(value)
+    // if (parseFloat(value, 10) || value === '.' || value === '0') {
+    //     this.setState({input: this.state.input + value });
+    // } else {
+    //   const newState = { input: "", sign: value, tmp: parseFloat(this.state.input, 10) || 0 };
+    //   if (!this.state.input.length && this.state.tmp && this.state.sign) {
+    //     newState.tmp = this.state.tmp;
+    //   }
+    //   this.setState(newState);
+    // }
   }
 
   reset() {
@@ -47,7 +47,6 @@ class App extends Component {
     if (!input && input !== 0) {
       input = this.state.tmp;
     }
-    console.log(this.state.tmp + this.state.sign + input);
     if (this.state.sign === '+')
       this.setState({ input: this.state.tmp + input });
     else if (this.state.sign === '-')
@@ -56,7 +55,6 @@ class App extends Component {
       this.setState({ input: this.state.tmp * input });
     else if (this.state.sign === '/')
       this.setState({ input: this.state.tmp / input });
-    console.log(this.state);
   }
 
   render() {
@@ -65,7 +63,7 @@ class App extends Component {
         <div className="d-flex">
           <div className="reset" onClick={() => this.reset()}>C</div>
           <div className="screen sign">{this.state.sign}</div>
-          <div className="screen input"><p>{this.state.input || this.state.tmp || 0}</p></div>
+          <div className="screen input"><p>{this.props.state.input || this.state.tmp || 0}</p></div>
         </div>
 
         <div className="keys">

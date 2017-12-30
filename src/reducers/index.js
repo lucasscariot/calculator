@@ -1,9 +1,14 @@
-export default (state = 0, action) => {
+const initialState = {
+  input: ""
+}
+
+export default (state = initialState, action) => {
+  console.log(action.type, action.value);
   switch (action.type) {
-    case 'INCREMENT':
-      return state + 1
-    case 'DECREMENT':
-      return state - 1
+    case 'ADD_OPERATOR':
+      return {
+        input: state.input + action.value
+      }
     default:
       return state
   }
