@@ -8,6 +8,7 @@ const initialState = {
 }
 
 export default (state = initialState, action) => {
+  console.log(action.type)
   const newState = _.cloneDeep(state)
   switch (action.type) {
     case 'UPDATE_INPUT':
@@ -20,33 +21,42 @@ export default (state = initialState, action) => {
       } else {
         newState.sign = action.value
       }
-      newState.tmp = parseFloat(state.input, 10) || 0
+
+      if (state.input.length && state.tmp) {
+        newState.input = ''
+      } else {
+        newState.tmp = parseFloat(state.input, 10) || 0
+      }
 
       if (!state.input.length && state.tmp && state.sign) {
         newState.tmp = state.tmp
       }
       return newState
     case 'GET_RESULT': {
-      let input = parseFloat(state.input, 10)
-      if (!input && input !== 0) { input = state.tmp }
+      const input = parseFloat(state.input, 10)
+      if ((!input && input !== 0) || !state.tmp || !state.sign) {
+        return state
+      }
 
       newState.history.push(`${state.tmp} ${state.sign} ${input}`)
+      newState.input = ''
+      newState.sign = ''
 
       switch (state.sign) {
         case '+': {
-          newState.input = state.tmp + input
+          newState.tmp = state.tmp + input
           break
         }
         case '-': {
-          newState.input = state.tmp - input
+          newState.tmp = state.tmp - input
           break
         }
         case 'x': {
-          newState.input = state.tmp * input
+          newState.tmp = state.tmp * input
           break
         }
         case '/': {
-          newState.input = state.tmp / input
+          newState.tmp = state.tmp / input
           break
         }
         default:

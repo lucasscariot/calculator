@@ -28,7 +28,7 @@ class App extends Component {
   }
 
   handleKeyPress(event) {
-    if (parseInt(event.key, 10) || event.key === '0') {
+    if (parseInt(event.key, 10) || event.key === '0' || event.key === '.') {
       this.props.actions.updateInput(event.key)
     } else if (event.key === '*' || event.key === '/' || event.key === '+' || event.key === '-') {
       this.props.actions.addOperator(event.key)
@@ -52,6 +52,12 @@ class App extends Component {
           <div className='screen input'>
             <p>{this.props.state.input || this.props.state.tmp || 0}</p>
           </div>
+        </div>
+
+        <div>
+          <p>Input: {this.props.state.input}</p>
+          <p>Tmp: {this.props.state.tmp}</p>
+          <p>Operator: {this.props.state.sign}</p>
         </div>
 
         <div className='keys'>
