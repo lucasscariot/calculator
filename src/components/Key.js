@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const Key = props => (
-  <div onClick={() => props.onClick()} className='key'>
+  <div onClick={() => props.onClick(props.value)} className='key'>
     {props.value}
   </div>
 )

@@ -1,16 +1,19 @@
-export const addOperator = (value) => ({
+export const addOperator = value => ({
   type: 'ADD_OPERATOR',
-  value: value
+  value
 })
 
-export const updateInput = (value) => ({
+export const updateInput = value => ({
   type: 'UPDATE_INPUT',
-  value: value
+  value
 })
-
 
 export const getResult = () => ({
   type: 'GET_RESULT'
+})
+
+export const undoInput = () => ({
+  type: 'UNDO_INPUT'
 })
 
 export const resetState = () => ({

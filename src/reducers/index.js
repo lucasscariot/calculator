@@ -8,6 +8,7 @@ const initialState = {
 }
 
 export default (state = initialState, action) => {
+  console.log(action.type)
   const newState = _.cloneDeep(state)
   switch (action.type) {
     case 'UPDATE_INPUT':
@@ -15,7 +16,11 @@ export default (state = initialState, action) => {
       return newState
     case 'ADD_OPERATOR':
       newState.input = ''
-      newState.sign = action.value
+      if (action.value === '*') {
+        newState.sign = 'x'
+      } else {
+        newState.sign = action.value
+      }
       newState.tmp = parseFloat(state.input, 10) || 0
 
       if (!state.input.length && state.tmp && state.sign) {
@@ -27,6 +32,8 @@ export default (state = initialState, action) => {
       if (!input && input !== 0) { input = state.tmp }
 
       newState.history.push(`${state.tmp} ${state.sign} ${input}`)
+
+      console.log(`${state.tmp} ${state.sign} ${input}`)
       switch (state.sign) {
         case '+': {
           newState.input = state.tmp + input
@@ -45,6 +52,12 @@ export default (state = initialState, action) => {
           break
         }
         default:
+      }
+      return newState
+    }
+    case 'UNDO_INPUT': {
+      if (state.input.length) {
+        newState.input = state.input.slice(0, -1)
       }
       return newState
     }

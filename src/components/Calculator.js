@@ -4,27 +4,40 @@ import '../stylesheets/App.css'
 import Key from './Key'
 
 class App extends Component {
-  handleClick(value) {
-    if (parseFloat(value, 10) || value === '.' || value === '0') {
-      this.props.actions.updateInput(value)
+  constructor() {
+    super()
+    this.handleKeyPress = this.handleKeyPress.bind(this)
+  }
+
+  componentDidMount() {
+    document.addEventListener('keydown', this.handleKeyPress)
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.handleKeyPress)
+  }
+
+  handleKeyPress(event) {
+    if (parseInt(event.key, 10) || event.key === '0') {
+      this.props.actions.updateInput(event.key)
+    } else if (event.key === '*' || event.key === '/' || event.key === '+' || event.key === '-') {
+      this.props.actions.addOperator(event.key)
+    } else if (event.key === 'Backspace') {
+      this.props.actions.undoInput(event.key)
+    } else if (event.key === 'Escape') {
+      this.props.actions.resetState()
+    } else if (event.key === 'Enter') {
+      this.props.actions.getResult()
     } else {
-      this.props.actions.addOperator(value)
+      console.log(event.key)
     }
-  }
-
-  reset() {
-    this.props.actions.resetState()
-  }
-
-  result() {
-    this.props.actions.getResult()
   }
 
   render() {
     return (
       <div className='calculator'>
         <div className='d-flex'>
-          <div className='reset' onClick={() => this.reset()}>C</div>
+          <div className='reset' onClick={this.props.actions.resetState}>C</div>
           <div className='screen sign'>{this.props.state.sign}</div>
           <div className='screen input'>
             <p>{this.props.state.input || this.props.state.tmp || 0}</p>
@@ -33,28 +46,28 @@ class App extends Component {
 
         <div className='keys'>
           <div className='d-flex'>
-            <Key value='7' onClick={() => this.handleClick('7')} />
-            <Key value='8' onClick={() => this.handleClick('8')} />
-            <Key value='9' onClick={() => this.handleClick('9')} />
-            <Key value='-' onClick={() => this.handleClick('-')} />
+            <Key value='7' onClick={this.props.actions.updateInput} />
+            <Key value='8' onClick={this.props.actions.updateInput} />
+            <Key value='9' onClick={this.props.actions.updateInput} />
+            <Key value='-' onClick={this.props.actions.addOperator} />
           </div>
           <div className='d-flex'>
-            <Key value='4' onClick={() => this.handleClick('4')} />
-            <Key value='5' onClick={() => this.handleClick('5')} />
-            <Key value='6' onClick={() => this.handleClick('6')} />
-            <Key value='+' onClick={() => this.handleClick('+')} />
+            <Key value='4' onClick={this.props.actions.updateInput} />
+            <Key value='5' onClick={this.props.actions.updateInput} />
+            <Key value='6' onClick={this.props.actions.updateInput} />
+            <Key value='+' onClick={this.props.actions.addOperator} />
           </div>
           <div className='d-flex'>
-            <Key value='1' onClick={() => this.handleClick('1')} />
-            <Key value='2' onClick={() => this.handleClick('2')} />
-            <Key value='3' onClick={() => this.handleClick('3')} />
-            <Key value='x' onClick={() => this.handleClick('x')} />
+            <Key value='1' onClick={this.props.actions.updateInput} />
+            <Key value='2' onClick={this.props.actions.updateInput} />
+            <Key value='3' onClick={this.props.actions.updateInput} />
+            <Key value='x' onClick={this.props.actions.addOperator} />
           </div>
           <div className='d-flex'>
-            <Key value='0' onClick={() => this.handleClick('0')} />
-            <Key value='.' onClick={() => this.handleClick('.')} />
-            <Key value='=' onClick={() => this.result('=')} />
-            <Key value='/' onClick={() => this.handleClick('/')} />
+            <Key value='0' onClick={this.props.actions.updateInput} />
+            <Key value='.' onClick={this.props.actions.updateInput} />
+            <Key value='=' onClick={this.props.actions.getResult} />
+            <Key value='/' onClick={this.props.actions.addOperator} />
           </div>
         </div>
       </div>
