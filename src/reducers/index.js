@@ -8,7 +8,6 @@ const initialState = {
 }
 
 export default (state = initialState, action) => {
-  console.log(action.type)
   const newState = _.cloneDeep(state)
   switch (action.type) {
     case 'UPDATE_INPUT':
@@ -33,7 +32,6 @@ export default (state = initialState, action) => {
 
       newState.history.push(`${state.tmp} ${state.sign} ${input}`)
 
-      console.log(`${state.tmp} ${state.sign} ${input}`)
       switch (state.sign) {
         case '+': {
           newState.input = state.tmp + input

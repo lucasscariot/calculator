@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import _ from 'lodash'
 import '../stylesheets/App.css'
 import Key from './Key'
 
@@ -7,7 +8,9 @@ class App extends Component {
   constructor() {
     super()
     this.handleKeyPress = this.handleKeyPress.bind(this)
+    this.monkey = this.monkey.bind(this)
   }
+
 
   componentDidMount() {
     document.addEventListener('keydown', this.handleKeyPress)
@@ -17,6 +20,13 @@ class App extends Component {
     document.removeEventListener('keydown', this.handleKeyPress)
   }
 
+  monkey() {
+    const event = {
+      key: _.shuffle(['1', '2', '3', '4', '5', '6', '7', '8', '*', '-', 'Enter', '+', '/', 'Escape'])[0]
+    }
+    this.handleKeyPress(event)
+  }
+
   handleKeyPress(event) {
     if (parseInt(event.key, 10) || event.key === '0') {
       this.props.actions.updateInput(event.key)
@@ -24,12 +34,12 @@ class App extends Component {
       this.props.actions.addOperator(event.key)
     } else if (event.key === 'Backspace') {
       this.props.actions.undoInput(event.key)
+    } else if (event.key === ' ') {
+      setInterval(this.monkey, 100)
     } else if (event.key === 'Escape') {
       this.props.actions.resetState()
     } else if (event.key === 'Enter') {
       this.props.actions.getResult()
-    } else {
-      console.log(event.key)
     }
   }
 
