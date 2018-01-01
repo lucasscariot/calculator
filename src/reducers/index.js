@@ -1,74 +1,55 @@
+/* eslint no-eval: 0 */
 import _ from 'lodash'
 
 const initialState = {
-  tmp: null,
-  input: '',
-  sign: null,
-  history: []
+  computeHistory: [],
+  result: "",
+  currentCompute: ''
 }
+
+const Elements = [
+  '1', '2', '3', '4',
+  '5', '6', '7', '8',
+  '9', '0'
+]
 
 export default (state = initialState, action) => {
   const newState = _.cloneDeep(state)
+
+  // console.log(action.type, action.value)
+
   switch (action.type) {
-    case 'UPDATE_INPUT':
-      newState.input = state.input + action.value
+    case 'UPDATE_COMPUTE':
+      newState.currentCompute = state.currentCompute + action.value
+      newState.result = ""
       return newState
     case 'ADD_OPERATOR':
-      newState.input = ''
-      if (action.value === '*') {
-        newState.sign = 'x'
-      } else {
-        newState.sign = action.value
+      if (Elements.indexOf(newState.currentCompute[newState.currentCompute.length - 1]) === -1) {
+        return newState
       }
-
-      if (state.tmp) {
-        newState.input = ''
-      } else {
-        newState.tmp = parseFloat(state.input, 10) || 0
-      }
-
-      if (!state.input.length && state.tmp && state.sign) {
-        newState.tmp = state.tmp
-      }
+      const value = action.value === 'x' ? '*' : action.value
+      newState.currentCompute = state.currentCompute + value
       return newState
     case 'GET_RESULT': {
-      const input = parseFloat(state.input, 10)
-      if ((!input && input !== 0) || !state.tmp || !state.sign) {
-        return state
+      if (Elements.indexOf(newState.currentCompute[newState.currentCompute.length - 1]) === -1) {
+        return newState
       }
 
-      newState.history.push(`${state.tmp} ${state.sign} ${input}`)
-      newState.input = ''
-      newState.sign = ''
-
-      switch (state.sign) {
-        case '+': {
-          newState.tmp = state.tmp + input
-          break
-        }
-        case '-': {
-          newState.tmp = state.tmp - input
-          break
-        }
-        case 'x': {
-          newState.tmp = state.tmp * input
-          break
-        }
-        case '/': {
-          newState.tmp = state.tmp / input
-          break
-        }
-        default:
+      try {
+        newState.result = eval(state.currentCompute)
+      } catch (e) {
+        newState.result = 'Error'
       }
+      newState.currentCompute = initialState.currentCompute
       return newState
     }
     case 'UNDO_INPUT': {
-      if (state.input.length) {
-        newState.input = state.input.slice(0, -1)
+      if (state.currentCompute.length) {
+        newState.currentCompute = state.currentCompute.slice(0, -1)
       }
       return newState
     }
-    case 'RESET_STATE':
+    case 'CLEAR_COMPUTE':
       return initialState
     default:
       return state

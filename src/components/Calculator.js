@@ -7,9 +7,9 @@ import Key from './Key'
 class App extends Component {
   constructor() {
     super()
+    this.state = { monkeyMode: false }
     this.handleKeyPress = this.handleKeyPress.bind(this)
     this.monkey = this.monkey.bind(this)
-    this.addOperator = this.addOperator.bind(this)
   }
 
 
@@ -21,13 +21,6 @@ class App extends Component {
     document.removeEventListener('keydown', this.handleKeyPress)
   }
 
-  addOperator(value) {
-    if (this.props.state.tmp && this.props.state.sign && this.props.state.input) {
-      this.props.actions.getResult()
-    }
-    this.props.actions.addOperator(value)
-  }
-
   monkey() {
     const event = {
       key: _.shuffle(['1', '2', '3', '4', '5', '6', '7', '8', '*', '-', 'Enter', '+', '/', 'Escape'])[0]
@@ -36,16 +29,22 @@ class App extends Component {
   }
 
   handleKeyPress(event) {
-    if (parseInt(event.key, 10) || event.key === '0' || event.key === '.') {
-      this.props.actions.updateInput(event.key)
-    } else if (event.key === '*' || event.key === '/' || event.key === '+' || event.key === '-') {
-      this.addOperator(event.key)
+    if (parseInt(event.key, 10) || event.key === '0') {
+      this.props.actions.updateCompute(event.key)
+    } else if (event.key === '*' || event.key === '/' || event.key === '+' || event.key === '-' || event.key === '.') {
+      this.props.actions.addOperator(event.key)
     } else if (event.key === 'Backspace') {
       this.props.actions.undoInput(event.key)
     } else if (event.key === ' ') {
-      setInterval(this.monkey, 100)
+      if (this.state.monkeyMode) {
+        clearInterval(this.state.monkeyMode);
+        this.setState({ monkeyMode: false })
+        this.props.actions.clearCompute()
+      } else {
+        this.setState({ monkeyMode: setInterval(this.monkey, 100) })
+      }
     } else if (event.key === 'Escape') {
-      this.props.actions.resetState()
+      this.props.actions.clearCompute()
     } else if (event.key === 'Enter') {
       this.props.actions.getResult()
     }
@@ -55,43 +54,36 @@ class App extends Component {
     return (
       <div className='calculator'>
         <div className='d-flex'>
-          <div className='reset' onClick={this.props.actions.resetState}>C</div>
-          <div className='screen sign'>{this.props.state.sign}</div>
+          <div className='key reset' onClick={this.props.actions.clearCompute}>C</div>
           <div className='screen input'>
-            <p>{this.props.state.input || this.props.state.tmp || 0}</p>
+            <p>{this.props.state.result || this.props.state.currentCompute || 0}</p>
           </div>
-        </div>
-
-        <div>
-          <p>Input: {this.props.state.input}</p>
-          <p>Tmp: {this.props.state.tmp}</p>
-          <p>Operator: {this.props.state.sign}</p>
         </div>
 
         <div className='keys'>
           <div className='d-flex'>
-            <Key value='7' onClick={this.props.actions.updateInput} />
-            <Key value='8' onClick={this.props.actions.updateInput} />
-            <Key value='9' onClick={this.props.actions.updateInput} />
-            <Key value='-' onClick={this.addOperator} />
+            <Key value='7' onClick={this.props.actions.updateCompute} />
+            <Key value='8' onClick={this.props.actions.updateCompute} />
+            <Key value='9' onClick={this.props.actions.updateCompute} />
+            <Key value='-' onClick={this.props.actions.addOperator} />
           </div>
           <div className='d-flex'>
-            <Key value='4' onClick={this.props.actions.updateInput} />
-            <Key value='5' onClick={this.props.actions.updateInput} />
-            <Key value='6' onClick={this.props.actions.updateInput} />
-            <Key value='+' onClick={this.addOperator} />
+            <Key value='4' onClick={this.props.actions.updateCompute} />
+            <Key value='5' onClick={this.props.actions.updateCompute} />
+            <Key value='6' onClick={this.props.actions.updateCompute} />
+            <Key value='+' onClick={this.props.actions.addOperator} />
           </div>
           <div className='d-flex'>
-            <Key value='1' onClick={this.props.actions.updateInput} />
-            <Key value='2' onClick={this.props.actions.updateInput} />
-            <Key value='3' onClick={this.props.actions.updateInput} />
-            <Key value='x' onClick={this.addOperator} />
+            <Key value='1' onClick={this.props.actions.updateCompute} />
+            <Key value='2' onClick={this.props.actions.updateCompute} />
+            <Key value='3' onClick={this.props.actions.updateCompute} />
+            <Key value='x' onClick={this.props.actions.addOperator} />
           </div>
           <div className='d-flex'>
-            <Key value='0' onClick={this.props.actions.updateInput} />
-            <Key value='.' onClick={this.props.actions.updateInput} />
+            <Key value='0' onClick={this.props.actions.updateCompute} />
+            <Key value='.' onClick={this.props.actions.addOperator} />
             <Key value='=' onClick={this.props.actions.getResult} />
-            <Key value='/' onClick={this.addOperator} />
+            <Key value='/' onClick={this.props.actions.addOperator} />
           </div>
         </div>
       </div>

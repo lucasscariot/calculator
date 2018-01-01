@@ -3,8 +3,8 @@ export const addOperator = value => ({
   value
 })
 
-export const updateInput = value => ({
-  type: 'UPDATE_INPUT',
+export const updateCompute = value => ({
+  type: 'UPDATE_COMPUTE',
   value
 })
 
@@ -16,6 +16,6 @@ export const undoInput = () => ({
   type: 'UNDO_INPUT'
 })
 
-export const resetState = () => ({
-  type: 'RESET_STATE'
+export const clearCompute = () => ({
+  type: 'CLEAR_COMPUTE'
 })

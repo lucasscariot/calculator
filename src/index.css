@@ -10,7 +10,8 @@ body {
 }
 
 .calculator {
-  width: 300px;
+  min-width: 400px;
+  max-width: 560px;
   border-radius: 5px;
   padding: 10px;
   border: 3px solid rgba(255, 255, 255, 0.1);
@@ -18,42 +19,40 @@ body {
 }
 
 .screen {
-  height: 65px;
-  background-color: rgba(255, 255, 255, 0.3);
-  display: flex;
   align-items: center;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-bottom: 5px solid rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  color: white;
+  display: flex;
+  font-size: 40px;
+  height: 65px;
   justify-content: flex-end;
   padding: 0px 10px;
-  font-size: 40px;
-  color: white;
-  border-bottom: 5px solid rgba(0, 0, 0, 0.1);
-}
-.input {
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 3px;
   width: 100%;
 }
 
-.sign {
-  border-top-left-radius: 3px;
-  border-bottom-left-radius: 3px;
-  width: 50px;
+.screen p {
+  text-overflow: ellipsis;
+  margin: 0;
+  white-space: nowrap;
 }
 
 .keys {
-  padding-top: 10px;
   display: flex;
   flex-direction: column;
+  padding-top: 10px;
 }
 
 .d-flex { display: flex; }
 
-.key, .reset {
+.key {
   border-radius: 2px;
   padding: 5px;
   margin: 2px;
   width: 100%;
-  height: 55px;
+  height: 60px;
   background-color: rgba(255, 255, 255, 0.1);
   color: white;
   display: flex;
@@ -66,8 +65,6 @@ body {
   cursor: default;
   user-select: none;
 }
-
-* { box-sizing: border-box; }
 
 .reset {
   margin: 0;

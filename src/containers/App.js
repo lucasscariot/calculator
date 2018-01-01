@@ -17,10 +17,9 @@ App.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  input: state.input,
-  tmp: state.tmp,
-  sign: state.sign,
-  history: state.history
+  currentCompute: state.currentCompute,
+  result: state.result,
+  computeHistory: state.computeHistory
 })
 
 const mapDispatchToProps = dispatch => ({
