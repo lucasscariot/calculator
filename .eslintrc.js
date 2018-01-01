@@ -9,10 +9,9 @@ module.exports = {
       "class-methods-use-this": "off",
       "no-underscore-dangle": ["error", { "allow": ["_extend", "_id", "__super__", "_source"] }],
       "jsx-quotes": ["error", "prefer-single"],
-      "jsx-a11y/no-static-element-interactions": "off",
-      "jsx-a11y/click-events-have-key-events": "off",
-      "jsx-a11y/mouse-events-have-key-events": "off",
       "jsx-a11y/label-has-for": "off",
+      "jsx-a11y/href-no-hash": "off",
+      "react/no-render-return-value": "off",
       "jsx-a11y/anchor-is-valid": ["error", {
         components: ['Link'],
         specialLink: ['to'],

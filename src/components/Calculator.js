@@ -4,9 +4,7 @@ import _ from 'lodash'
 import '../stylesheets/App.css'
 import Key from './Key'
 
-const Operators = [
-  '*', '+', '/', '-', '.'
-]
+const Operators = ['*', '+', '/', '-', '.']
 
 class App extends Component {
   constructor() {
@@ -42,7 +40,7 @@ class App extends Component {
       this.props.actions.undoInput(event.key)
     } else if (event.key === ' ') {
       if (this.props.state.monkeyFunction) {
-        clearInterval(this.props.state.monkeyFunction);
+        clearInterval(this.props.state.monkeyFunction)
         this.props.actions.encloseMonkeys()
         this.props.actions.clearCompute()
       } else {
@@ -59,8 +57,10 @@ class App extends Component {
     return (
       <div className='calculator'>
         <div className='d-flex'>
-          <div className='key reset' onClick={this.props.actions.clearCompute}>C</div>
-          <div className='screen input'>
+          <button className='key reset' onClick={this.props.actions.clearCompute}>
+            C
+          </button>
+          <div className='screen'>
             <p>{this.props.state.result || this.props.state.currentCompute || 0}</p>
           </div>
         </div>

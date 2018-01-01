@@ -48,6 +48,7 @@ body {
 .d-flex { display: flex; }
 
 .key {
+  border: none;
   border-radius: 2px;
   padding: 5px;
   margin: 2px;
@@ -65,6 +66,8 @@ body {
   cursor: default;
   user-select: none;
 }
+
+.key:focus { outline: none; }
 
 .reset {
   margin: 0;

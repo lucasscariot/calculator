@@ -2,7 +2,7 @@
 import _ from 'lodash'
 
 const initialState = {
-  result: "",
+  result: '',
   currentCompute: '',
   monkeyFunction: null
 }
@@ -18,14 +18,15 @@ export default (state = initialState, action) => {
   const lastComputeElement = newState.currentCompute[newState.currentCompute.length - 1]
 
   switch (action.type) {
-    case 'UPDATE_COMPUTE':
+    case 'UPDATE_COMPUTE': {
       if (Elements.indexOf(action.value) === -1) {
         return newState
       }
       newState.currentCompute = state.currentCompute + action.value
-      newState.result = ""
+      newState.result = ''
       return newState
-    case 'ADD_OPERATOR':
+    }
+    case 'ADD_OPERATOR': {
       if (action.value === '-' && lastComputeElement !== '-') {
         newState.currentCompute = state.currentCompute + action.value
         return newState
@@ -36,6 +37,7 @@ export default (state = initialState, action) => {
       const value = action.value === 'x' ? '*' : action.value
       newState.currentCompute = state.currentCompute + value
       return newState
+    }
     case 'GET_RESULT': {
       if (Elements.indexOf(lastComputeElement) === -1) {
         return newState
@@ -64,10 +66,11 @@ export default (state = initialState, action) => {
       newState.monkeyFunction = null
       return newState
     }
-    case 'CLEAR_COMPUTE':
+    case 'CLEAR_COMPUTE': {
       const cleanState = _.cloneDeep(initialState)
       cleanState.monkeyFunction = state.monkeyFunction
       return cleanState
+    }
     default:
       return state
   }
