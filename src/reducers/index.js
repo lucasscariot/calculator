@@ -8,7 +8,6 @@ const initialState = {
 }
 
 export default (state = initialState, action) => {
-  console.log(action.type)
   const newState = _.cloneDeep(state)
   switch (action.type) {
     case 'UPDATE_INPUT':
@@ -22,7 +21,7 @@ export default (state = initialState, action) => {
         newState.sign = action.value
       }
 
-      if (state.input.length && state.tmp) {
+      if (state.tmp) {
         newState.input = ''
       } else {
         newState.tmp = parseFloat(state.input, 10) || 0

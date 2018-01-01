@@ -9,6 +9,7 @@ class App extends Component {
     super()
     this.handleKeyPress = this.handleKeyPress.bind(this)
     this.monkey = this.monkey.bind(this)
+    this.addOperator = this.addOperator.bind(this)
   }
 
 
@@ -18,6 +19,13 @@ class App extends Component {
 
   componentWillUnmount() {
     document.removeEventListener('keydown', this.handleKeyPress)
+  }
+
+  addOperator(value) {
+    if (this.props.state.tmp && this.props.state.sign && this.props.state.input) {
+      this.props.actions.getResult()
+    }
+    this.props.actions.addOperator(value)
   }
 
   monkey() {
@@ -31,7 +39,7 @@ class App extends Component {
     if (parseInt(event.key, 10) || event.key === '0' || event.key === '.') {
       this.props.actions.updateInput(event.key)
     } else if (event.key === '*' || event.key === '/' || event.key === '+' || event.key === '-') {
-      this.props.actions.addOperator(event.key)
+      this.addOperator(event.key)
     } else if (event.key === 'Backspace') {
       this.props.actions.undoInput(event.key)
     } else if (event.key === ' ') {
@@ -65,25 +73,25 @@ class App extends Component {
             <Key value='7' onClick={this.props.actions.updateInput} />
             <Key value='8' onClick={this.props.actions.updateInput} />
             <Key value='9' onClick={this.props.actions.updateInput} />
-            <Key value='-' onClick={this.props.actions.addOperator} />
+            <Key value='-' onClick={this.addOperator} />
           </div>
           <div className='d-flex'>
             <Key value='4' onClick={this.props.actions.updateInput} />
             <Key value='5' onClick={this.props.actions.updateInput} />
             <Key value='6' onClick={this.props.actions.updateInput} />
-            <Key value='+' onClick={this.props.actions.addOperator} />
+            <Key value='+' onClick={this.addOperator} />
           </div>
           <div className='d-flex'>
             <Key value='1' onClick={this.props.actions.updateInput} />
             <Key value='2' onClick={this.props.actions.updateInput} />
             <Key value='3' onClick={this.props.actions.updateInput} />
-            <Key value='x' onClick={this.props.actions.addOperator} />
+            <Key value='x' onClick={this.addOperator} />
           </div>
           <div className='d-flex'>
             <Key value='0' onClick={this.props.actions.updateInput} />
             <Key value='.' onClick={this.props.actions.updateInput} />
             <Key value='=' onClick={this.props.actions.getResult} />
-            <Key value='/' onClick={this.props.actions.addOperator} />
+            <Key value='/' onClick={this.addOperator} />
           </div>
         </div>
       </div>
