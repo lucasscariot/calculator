@@ -60,9 +60,13 @@ class App extends Component {
           <button className='key reset' onClick={this.props.actions.clearCompute}>
             C
           </button>
-          <p>{this.props.state.completedCompute}</p>
-          <div className='screen'>
-            <p>{this.props.state.result || this.props.state.currentCompute || 0}</p>
+          <div className='display'>
+            <div className='screen'>
+              <p>{this.props.state.completedCompute}</p>
+            </div>
+            <div className='screen'>
+              <p>{this.props.state.result || this.props.state.currentCompute || 0}</p>
+            </div>
           </div>
         </div>
 

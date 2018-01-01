@@ -18,6 +18,11 @@ body {
   border-bottom: 8px solid rgba(255, 255, 255, 0.1);
 }
 
+.display {
+  display: flex;
+  flex-direction: column;
+}
+
 .screen {
   align-items: center;
   overflow: hidden;
