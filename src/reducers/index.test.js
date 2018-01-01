@@ -10,9 +10,9 @@ describe('Import Reducer', () => {
 
   it('should return the initial state', () => {
     expect(Reducer(undefined, {})).toEqual({
-      computeHistory: [],
       currentCompute: "",
-      result: ""
+      result: "",
+      monkeyFunction: null
     })
   })
 })
