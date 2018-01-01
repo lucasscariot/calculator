@@ -26,8 +26,15 @@ export default (state = initialState, action) => {
       if (Elements.indexOf(action.value) === -1) {
         return newState
       }
+
       newState.currentCompute = state.currentCompute + action.value
       newState.result = ''
+
+      if (newState.currentCompute === '2018') {
+        newState.completedCompute = 'Happy New Year!'
+      } else {
+        newState.completedCompute = ''
+      }
       return newState
     }
     case 'ADD_OPERATOR': {

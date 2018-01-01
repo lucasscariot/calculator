@@ -3,7 +3,7 @@
 
 - [Deployed here!](https://lucasscariot.github.io/calculator)
 
-![Preview](https://raw.githubusercontent.com/lucasscariot/calculator/master/preview.png)
+![Preview](https://raw.githubusercontent.com/lucasscariot/calculator/devel/preview.png)
 
 ## Installation
 - `git clone https://github.com/lucasscariot/calculator.git`
