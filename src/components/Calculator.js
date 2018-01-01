@@ -62,7 +62,9 @@ class App extends Component {
           </button>
           <p className='result'>{this.props.state.completedCompute}</p>
           <div className='screen'>
-            <p className='compute'>{this.props.state.result || this.props.state.currentCompute || 0}</p>
+            <p className='compute'>
+              {this.props.state.result || this.props.state.currentCompute || 0}
+            </p>
           </div>
         </div>
 
