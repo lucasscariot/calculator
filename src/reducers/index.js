@@ -2,9 +2,9 @@
 import _ from 'lodash'
 
 const initialState = {
-  computeHistory: [],
   result: "",
-  currentCompute: ''
+  currentCompute: '',
+  monkeyFunction: null
 }
 
 const Elements = [
@@ -15,6 +15,7 @@ const Elements = [
 
 export default (state = initialState, action) => {
   const newState = _.cloneDeep(state)
+  const lastComputeElement = newState.currentCompute[newState.currentCompute.length - 1]
 
   switch (action.type) {
     case 'UPDATE_COMPUTE':
@@ -25,18 +26,18 @@ export default (state = initialState, action) => {
       newState.result = ""
       return newState
     case 'ADD_OPERATOR':
-      if (action.value === '-' && state.currentCompute.length === 0) {
+      if (action.value === '-' && lastComputeElement !== '-') {
         newState.currentCompute = state.currentCompute + action.value
         return newState
       }
-      if (Elements.indexOf(newState.currentCompute[newState.currentCompute.length - 1]) === -1) {
+      if (Elements.indexOf(lastComputeElement) === -1) {
         return newState
       }
       const value = action.value === 'x' ? '*' : action.value
       newState.currentCompute = state.currentCompute + value
       return newState
     case 'GET_RESULT': {
-      if (Elements.indexOf(newState.currentCompute[newState.currentCompute.length - 1]) === -1) {
+      if (Elements.indexOf(lastComputeElement) === -1) {
         return newState
       }
 
@@ -55,8 +56,18 @@ export default (state = initialState, action) => {
       }
       return newState
     }
+    case 'UNLEASH_MONKEYS': {
+      newState.monkeyFunction = action.value
+      return newState
+    }
+    case 'ENCLOSE_MONKEYS': {
+      newState.monkeyFunction = null
+      return newState
+    }
     case 'CLEAR_COMPUTE':
-      return initialState
+      const cleanState = _.cloneDeep(initialState)
+      cleanState.monkeyFunction = state.monkeyFunction
+      return cleanState
     default:
       return state
   }

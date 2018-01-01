@@ -8,6 +8,15 @@ export const updateCompute = value => ({
   value
 })
 
+export const unleashMonkeys = value => ({
+  type: 'UNLEASH_MONKEYS',
+  value
+})
+
+export const encloseMonkeys = () => ({
+  type: 'ENCLOSE_MONKEYS'
+})
+
 export const getResult = () => ({
   type: 'GET_RESULT'
 })

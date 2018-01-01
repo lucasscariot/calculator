@@ -4,10 +4,13 @@ import _ from 'lodash'
 import '../stylesheets/App.css'
 import Key from './Key'
 
+const Operators = [
+  '*', '+', '/', '-', '.'
+]
+
 class App extends Component {
   constructor() {
     super()
-    this.state = { monkeyMode: false }
     this.handleKeyPress = this.handleKeyPress.bind(this)
     this.monkey = this.monkey.bind(this)
   }
@@ -22,7 +25,10 @@ class App extends Component {
 
   monkey() {
     const event = {
-      key: _.shuffle(['1', '2', '3', '4', '5', '6', '7', '8', '*', '-', 'Enter', '+', '/', 'Escape'])[0]
+      key: _.shuffle([
+        '1', '2', '3', '4', '5',
+        '6', '7', '8', '*', '-', 'Enter',
+        '+', '/', 'Escape'])[0],
     }
     this.handleKeyPress(event)
   }
@@ -30,21 +36,21 @@ class App extends Component {
   handleKeyPress(event) {
     if (parseInt(event.key, 10) || event.key === '0') {
       this.props.actions.updateCompute(event.key)
-    } else if (event.key === '*' || event.key === '/' || event.key === '+' || event.key === '-' || event.key === '.') {
+    } else if (Operators.indexOf(event.key) !== -1) {
       this.props.actions.addOperator(event.key)
     } else if (event.key === 'Backspace') {
       this.props.actions.undoInput(event.key)
     } else if (event.key === ' ') {
-      if (this.state.monkeyMode) {
-        clearInterval(this.state.monkeyMode);
-        this.setState({ monkeyMode: false })
+      if (this.props.state.monkeyFunction) {
+        clearInterval(this.props.state.monkeyFunction);
+        this.props.actions.encloseMonkeys()
         this.props.actions.clearCompute()
       } else {
-        this.setState({ monkeyMode: setInterval(this.monkey, 100) })
+        this.props.actions.unleashMonkeys(setInterval(this.monkey, 100))
       }
     } else if (event.key === 'Escape') {
       this.props.actions.clearCompute()
-    } else if (event.key === 'Enter') {
+    } else if (event.key === 'Enter' || event.key === '=') {
       this.props.actions.getResult()
     }
   }
