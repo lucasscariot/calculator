@@ -4,3 +4,14 @@
 - [Deployed here!](https://lucasscariot.github.io/calculator)
 
 ![Preview](https://raw.githubusercontent.com/lucasscariot/calculator/master/preview.png)
+
+## Installation
+- `git clone https://github.com/lucasscariot/calculator.git`
+- `cd calculator`
+- `yarn install`
+- `yarn start`
+
+## Other commands
+- Test: `yarn test`
+- Eslint: `yarn run lint`
+- Build: `yarn run lint`
