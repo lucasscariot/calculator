@@ -12,7 +12,6 @@ class App extends Component {
     this.monkey = this.monkey.bind(this)
   }
 
-
   componentDidMount() {
     document.addEventListener('keydown', this.handleKeyPress)
   }

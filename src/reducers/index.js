@@ -25,6 +25,10 @@ export default (state = initialState, action) => {
       newState.result = ""
       return newState
     case 'ADD_OPERATOR':
+      if (action.value === '-' && state.currentCompute.length === 0) {
+        newState.currentCompute = state.currentCompute + action.value
+        return newState
+      }
       if (Elements.indexOf(newState.currentCompute[newState.currentCompute.length - 1]) === -1) {
         return newState
       }
