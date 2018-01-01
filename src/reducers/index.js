@@ -4,6 +4,7 @@ import _ from 'lodash'
 const initialState = {
   result: '',
   currentCompute: '',
+  completedCompute: '',
   monkeyFunction: null
 }
 
@@ -19,6 +20,9 @@ export default (state = initialState, action) => {
 
   switch (action.type) {
     case 'UPDATE_COMPUTE': {
+      if (state.result) {
+        newState.completedCompute = ''
+      }
       if (Elements.indexOf(action.value) === -1) {
         return newState
       }
@@ -49,6 +53,7 @@ export default (state = initialState, action) => {
         newState.result = 'error'
       }
       if (newState.result === Infinity) { newState.result = 'error' }
+      newState.completedCompute = state.currentCompute
       newState.currentCompute = initialState.currentCompute
       return newState
     }
