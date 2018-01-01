@@ -1,8 +1,7 @@
 import expect from 'expect'
 import Reducer from './index'
-import * as Actions from '../actions'
 
-/* global it */
+/* global it, describe */
 describe('Import Reducer', () => {
   it('should correctly import reducer', () => {
     expect(Reducer).not.toBe(null)
@@ -10,15 +9,15 @@ describe('Import Reducer', () => {
 
   it('should return the initial state', () => {
     expect(Reducer(undefined, {})).toEqual({
-      currentCompute: "",
-      result: "",
+      currentCompute: '',
+      result: '',
       monkeyFunction: null
     })
   })
 })
 
 describe('Compute Actions', () => {
-  let state =  Reducer(undefined, {})
+  let state = Reducer(undefined, {})
   it('should handle add the value to the current compute', () => {
     const updateCompute = {
       type: 'UPDATE_COMPUTE',
