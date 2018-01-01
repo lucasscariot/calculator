@@ -39,8 +39,9 @@ export default (state = initialState, action) => {
       try {
         newState.result = eval(state.currentCompute)
       } catch (e) {
-        newState.result = 'Error'
+        newState.result = 'error'
       }
+      if (newState.result === Infinity) { newState.result = 'error' }
       newState.currentCompute = initialState.currentCompute
       return newState
     }
