@@ -11,6 +11,7 @@ describe('Import Reducer', () => {
     expect(Reducer(undefined, {})).toEqual({
       currentCompute: '',
       result: '',
+      completedCompute: '',
       monkeyFunction: null
     })
   })
