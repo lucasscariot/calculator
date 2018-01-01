@@ -16,10 +16,11 @@ const Elements = [
 export default (state = initialState, action) => {
   const newState = _.cloneDeep(state)
 
-  // console.log(action.type, action.value)
-
   switch (action.type) {
     case 'UPDATE_COMPUTE':
+      if (Elements.indexOf(action.value) === -1) {
+        return newState
+      }
       newState.currentCompute = state.currentCompute + action.value
       newState.result = ""
       return newState

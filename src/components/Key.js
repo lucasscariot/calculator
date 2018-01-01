@@ -9,7 +9,7 @@ const Key = props => (
 
 Key.propTypes = {
   value: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func
 }
 
 export default Key
